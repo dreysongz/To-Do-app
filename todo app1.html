@@ -1,0 +1,58 @@
+<!doctype html>
+<head>
+<link href = "todocss.css" rel ="stylesheet"/>
+<title>
+My To-do App</title>
+</head>
+<body>
+<h1> My To-do List</h1>
+<form>
+<label>
+To-do:
+<input type="text" id="newTask" placeholder="add task here"/>
+</label>
+<button type="button" id = "addTask">
+Add Task
+</button>
+</form>
+ <ul id ="todoList">
+</ul>
+    
+    <script type="text/template" id="listItem">
+    <li class="task">
+      <label>
+        <input class ="checkbox" type="checkbox">
+        <!-- TASK_NAME -->
+      </label>
+    </li>
+    </script>
+	<script>
+var addTask = document.getElementById("addTask");
+var newTaskInput = document.getElementById("newTask");
+var todolist = document.getElementById("todoList");
+var templateElement = document.getElementById("listItem");
+var template = templateElement.innerText;
+addTask.addEventListener('click', function(event) {
+  var taskName = newTaskInput.value;
+  newTaskInput.value = "";
+
+  var taskText = template.replace("<!-- TASK_NAME -->", taskName);
+  todolist.insertAdjacentHTML('afterbegin', taskText);
+});
+todolist.addEventListener('click', function(event) {
+  var targetElement = event.toElement;
+
+  while (!targetElement.classList.contains("task")) {
+    targetElement = targetElement.parentElement;
+  }
+  var checkbox = targetElement.querySelector(".checkbox");
+  if (checkbox.checked) {
+    targetElement.classList.add("completed");
+  } else {
+    targetElement.classList.remove("completed");
+  }
+});
+</script>
+  </body>
+
+</html>
